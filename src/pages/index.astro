@@ -1,0 +1,16 @@
+---
+import { getCollection, render } from "astro:content"
+
+import BaseLayout from "../layouts/BaseLayout.astro"
+
+const notes = await getCollection("notes")
+const home = notes.find((note) => note.data.slug === "home")
+
+if (!home) throw new Error("找不到 content/index.md")
+
+const { Content } = await render(home)
+---
+
+<BaseLayout title={home.data.title} description={home.data.description}>
+  <Content />
+</BaseLayout>

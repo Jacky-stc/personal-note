@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from "astro"
+import { getCollection, render } from "astro:content"
+
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { noteSlug } from "../../lib/notes"
+
+export const getStaticPaths = (async () => {
+  const notes = await getCollection("notes", ({ data }) => !data.draft)
+  const pageNotes = notes.filter((note) => noteSlug(note) !== "home")
+  const slugs = new Set<string>()
+
+  return pageNotes.map((note) => {
+    const slug = noteSlug(note)
+    if (slugs.has(slug)) throw new Error(`筆記 slug 重複：${slug}`)
+    slugs.add(slug)
+    return { params: { slug }, props: { note } }
+  })
+}) satisfies GetStaticPaths
+
+const { note } = Astro.props
+const { Content } = await render(note)
+---
+
+<BaseLayout title={note.data.title} description={note.data.description}>
+  <header class="note-header">
+    <h1>{note.data.title}</h1>
+    {
+      note.data.tags.length > 0 && (
+        <div class="tags" aria-label="標籤">
+          {note.data.tags.map((tag: string) => <span>#{tag}</span>)}
+        </div>
+      )
+    }
+  </header>
+  <Content />
+</BaseLayout>

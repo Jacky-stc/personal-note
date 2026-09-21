@@ -1,0 +1,150 @@
+---
+import { getCollection } from "astro:content"
+
+import Sidebar from "../components/Sidebar.astro"
+import { visibleNotes } from "../lib/notes"
+import "../styles/global.css"
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description = "個人學習筆記" } = Astro.props
+const notes = visibleNotes(await getCollection("notes"))
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title === "個人學習筆記" ? title : `${title} · 個人學習筆記`}</title>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement
+        const savedSidebar = localStorage.getItem("personal-note-sidebar")
+        const savedTheme = localStorage.getItem("personal-note-theme")
+        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+
+        if (savedSidebar === "collapsed") root.dataset.sidebar = "collapsed"
+        root.dataset.theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : preferredTheme
+      })()
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <Sidebar notes={notes} currentPath={Astro.url.pathname} />
+      <button
+        class="mobile-menu-toggle"
+        id="mobile-menu-toggle"
+        type="button"
+        aria-label="開啟筆記列表"
+        aria-controls="sidebar"
+        aria-expanded="false"
+      >
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"></path>
+        </svg>
+      </button>
+      <div class="mobile-menu-backdrop" id="mobile-menu-backdrop" aria-hidden="true"></div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換為深色模式">
+        <span class="theme-toggle-thumb" aria-hidden="true">
+          <svg class="sun-icon" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="3"></circle>
+            <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.35 4.35l1.4 1.4M14.25 14.25l1.4 1.4M15.65 4.35l-1.4 1.4M5.75 14.25l-1.4 1.4"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 20 20">
+            <path d="M16.5 12.5A7 7 0 0 1 7.5 3.5a7 7 0 1 0 9 9Z"></path>
+          </svg>
+        </span>
+      </button>
+      <main class="main-content">
+        <article class="note-content">
+          <slot />
+        </article>
+      </main>
+    </div>
+    <script>
+      const root = document.documentElement
+      const sidebar = document.querySelector<HTMLElement>("#sidebar")
+      const sidebarButton = document.querySelector<HTMLButtonElement>("#sidebar-toggle")
+      const mobileMenuButton = document.querySelector<HTMLButtonElement>("#mobile-menu-toggle")
+      const mobileMenuBackdrop = document.querySelector<HTMLElement>("#mobile-menu-backdrop")
+      const themeButton = document.querySelector<HTMLButtonElement>("#theme-toggle")
+      const mobileQuery = window.matchMedia("(max-width: 47.5rem)")
+
+      const updateControls = () => {
+        const collapsed = root.dataset.sidebar === "collapsed"
+        const dark = root.dataset.theme === "dark"
+        const mobile = mobileQuery.matches
+        const mobileMenuOpen = root.dataset.mobileMenu === "open"
+
+        sidebarButton?.setAttribute(
+          "aria-label",
+          mobile ? "關閉筆記列表" : collapsed ? "展開筆記列表" : "收合筆記列表",
+        )
+        sidebarButton?.setAttribute("aria-expanded", String(mobile ? mobileMenuOpen : !collapsed))
+        mobileMenuButton?.setAttribute("aria-expanded", String(mobileMenuOpen))
+        mobileMenuButton?.setAttribute("aria-label", mobileMenuOpen ? "關閉筆記列表" : "開啟筆記列表")
+        themeButton?.setAttribute("aria-label", dark ? "切換為淺色模式" : "切換為深色模式")
+        themeButton?.setAttribute("aria-pressed", String(dark))
+
+        if (sidebar) {
+          sidebar.inert = mobile && !mobileMenuOpen
+          if (mobile) sidebar.setAttribute("aria-hidden", String(!mobileMenuOpen))
+          else sidebar.removeAttribute("aria-hidden")
+        }
+      }
+
+      const setMobileMenu = (open: boolean) => {
+        root.dataset.mobileMenu = open ? "open" : "closed"
+        updateControls()
+      }
+
+      sidebarButton?.addEventListener("click", () => {
+        if (mobileQuery.matches) {
+          setMobileMenu(false)
+          mobileMenuButton?.focus()
+          return
+        }
+
+        const collapsed = root.dataset.sidebar === "collapsed"
+        root.dataset.sidebar = collapsed ? "expanded" : "collapsed"
+        localStorage.setItem("personal-note-sidebar", collapsed ? "expanded" : "collapsed")
+        updateControls()
+      })
+
+      themeButton?.addEventListener("click", () => {
+        const nextTheme = root.dataset.theme === "dark" ? "light" : "dark"
+        root.dataset.theme = nextTheme
+        localStorage.setItem("personal-note-theme", nextTheme)
+        updateControls()
+      })
+
+      mobileMenuButton?.addEventListener("click", () => {
+        setMobileMenu(root.dataset.mobileMenu !== "open")
+      })
+
+      mobileMenuBackdrop?.addEventListener("click", () => {
+        setMobileMenu(false)
+        mobileMenuButton?.focus()
+      })
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && mobileQuery.matches && root.dataset.mobileMenu === "open") {
+          setMobileMenu(false)
+          mobileMenuButton?.focus()
+        }
+      })
+
+      mobileQuery.addEventListener("change", () => setMobileMenu(false))
+
+      updateControls()
+    </script>
+  </body>
+</html>
