@@ -5,3 +5,4 @@ dist/
 .astro/
 .obsidian
 private/
+.pnpm-store/
