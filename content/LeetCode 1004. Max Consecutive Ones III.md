@@ -1,6 +1,7 @@
 ---
 title: LeetCode 1004. Max Consecutive Ones III
 slug: leetcode-1004-max-consecutive-ones-iii
+category: LeetCode
 description: ""
 tags:
   - LeetCode

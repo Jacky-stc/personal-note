@@ -10,6 +10,7 @@ const notes = defineCollection({
   schema: z.object({
     title: z.string(),
     slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "slug 只能使用小寫英文字母、數字與連字號"),
+    category: z.string().min(1).optional(),
     description: z.string().optional(),
     tags: z.array(z.string()).default([]),
     date: z.coerce.date().optional(),

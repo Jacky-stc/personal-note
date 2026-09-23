@@ -26,6 +26,7 @@ await tp.file.rename(title)
 ---
 title: <% JSON.stringify(title) %>
 slug: <% slug %>
+category: LeetCode
 description: ""
 tags:
   - LeetCode

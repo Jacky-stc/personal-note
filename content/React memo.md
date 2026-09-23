@@ -1,6 +1,7 @@
 ---
 title: React memo
 slug: react-memo
+category: React
 ---
 在前端效能優化的過程中，大家通常第一時間想到的就是 `memo` 和 `useMemo` ，下面會介紹我們該在什麼時候用 `memo` 來包我們的 component，`React.memo` 背後的底層邏輯是什麼，以及它在什麼情況下有可能會失效。
 ## 基礎應用

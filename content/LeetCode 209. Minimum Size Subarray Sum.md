@@ -1,6 +1,7 @@
 ---
 title: LeetCode 209. Minimum Size Subarray Sum
 slug: leetcode-209-minimum-size-subarray-sum
+category: LeetCode
 description: 使用滑動視窗尋找總和至少為 target 的最短連續子陣列
 tags:
   - LeetCode

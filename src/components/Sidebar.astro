@@ -11,13 +11,33 @@ interface Props {
 const { notes, currentPath } = Astro.props
 const base = import.meta.env.BASE_URL.replace(/\/$/, "")
 const sidebarNotes = notes.filter((note) => noteSlug(note) !== "home")
+const categorizedNotes = new Map<string, CollectionEntry<"notes">[]>()
+const uncategorizedNotes: CollectionEntry<"notes">[] = []
+
+for (const note of sidebarNotes) {
+  const category = note.data.category?.trim()
+
+  if (!category) {
+    uncategorizedNotes.push(note)
+    continue
+  }
+
+  const categoryNotes = categorizedNotes.get(category) ?? []
+  categoryNotes.push(note)
+  categorizedNotes.set(category, categoryNotes)
+}
+
+const noteCategories = Array.from(categorizedNotes, ([name, categoryNotes]) => ({
+  name,
+  notes: categoryNotes,
+})).sort((a, b) => a.name.localeCompare(b.name, "en"))
 ---
 
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-inner">
     <header class="sidebar-header">
       <a class="workspace" href={`${base}/`} aria-label="回到首頁">
-        <span class="workspace-mark" aria-hidden="true">P</span>
+        <img class="workspace-mark" src={`${base}/github-avatar.webp`} alt="" />
         <span class="workspace-name">個人學習筆記</span>
       </a>
       <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="收合筆記列表">
@@ -29,25 +49,62 @@ const sidebarNotes = notes.filter((note) => noteSlug(note) !== "home")
     </header>
     <nav class="note-navigation" aria-label="筆記列表">
       <div class="navigation-label">筆記</div>
-      <ul>
-        {
-          sidebarNotes.map((note) => {
-            const href = noteHref(note, base)
-            const active = decodeURI(currentPath) === decodeURI(href)
-            return (
-              <li>
-                <a href={href} aria-current={active ? "page" : undefined}>
-                  <svg viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M5 3.5h7l3 3V16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
-                    <path d="M12 3.5V7h3" />
-                  </svg>
-                  <span>{note.data.title}</span>
-                </a>
-              </li>
-            )
-          })
-        }
-      </ul>
+      {
+        noteCategories.map((category) => (
+          <details class="note-category" open>
+            <summary>
+              <svg class="category-icon" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M3.5 5.5h5l1.5 2h6.5v7.25a1.25 1.25 0 0 1-1.25 1.25H4.75a1.25 1.25 0 0 1-1.25-1.25Z" />
+              </svg>
+              <span class="category-name">{category.name}</span>
+              <span class="category-count">{category.notes.length}</span>
+              <svg class="category-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="m7.5 5 5 5-5 5" />
+              </svg>
+            </summary>
+            <ul>
+              {
+                category.notes.map((note) => {
+                  const href = noteHref(note, base)
+                  const active = decodeURI(currentPath) === decodeURI(href)
+                  return (
+                    <li>
+                      <a href={href} aria-current={active ? "page" : undefined}>
+                        <svg viewBox="0 0 20 20" aria-hidden="true">
+                          <path d="M5 3.5h7l3 3V16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+                          <path d="M12 3.5V7h3" />
+                        </svg>
+                        <span>{note.data.title}</span>
+                      </a>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </details>
+        ))
+      }
+      {
+        uncategorizedNotes.length > 0 && (
+          <ul class="uncategorized-notes">
+            {uncategorizedNotes.map((note) => {
+              const href = noteHref(note, base)
+              const active = decodeURI(currentPath) === decodeURI(href)
+              return (
+                <li>
+                  <a href={href} aria-current={active ? "page" : undefined}>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M5 3.5h7l3 3V16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+                      <path d="M12 3.5V7h3" />
+                    </svg>
+                    <span>{note.data.title}</span>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        )
+      }
     </nav>
   </div>
 </aside>
