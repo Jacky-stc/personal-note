@@ -497,6 +497,72 @@ body {
   font-size: 0.75rem;
   padding: 0.25rem 0.5625rem;
 }
+.note-pagination {
+  border-top: 0.0625rem solid var(--sidebar-border);
+  display: grid;
+  gap: 0.875rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+}
+.note-pagination-link {
+  background: var(--sidebar-bg);
+  border: 0.0625rem solid var(--sidebar-border);
+  border-radius: 0.75rem;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 1rem;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+.note-pagination-link:hover {
+  background: var(--surface-hover);
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--sidebar-border));
+  transform: translateY(-0.125rem);
+}
+.note-pagination-link:focus-visible {
+  outline: 0.125rem solid var(--accent);
+  outline-offset: 0.125rem;
+}
+.note-pagination-link--previous {
+  grid-column: 1/3;
+}
+.note-pagination-link--next {
+  grid-column: 4/6;
+  text-align: right;
+}
+.note-pagination-direction {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  font-size: 0.75rem;
+  gap: 0.25rem;
+}
+.note-pagination-link--next .note-pagination-direction {
+  justify-content: flex-end;
+}
+.note-pagination-direction svg {
+  fill: none;
+  height: 0.875rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  width: 0.875rem;
+}
+.note-pagination-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 @media (max-width: 47.5rem) {
   :root {

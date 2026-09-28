@@ -30,7 +30,7 @@ for (const note of sidebarNotes) {
 const noteCategories = Array.from(categorizedNotes, ([name, categoryNotes]) => ({
   name,
   notes: categoryNotes,
-})).sort((a, b) => a.name.localeCompare(b.name, "en"))
+}))
 ---
 
 <aside class="sidebar" id="sidebar">
