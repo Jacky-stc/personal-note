@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config"
 import { unified } from "@astrojs/markdown-remark"
+import sitemap from "@astrojs/sitemap"
 import { fileURLToPath } from "node:url"
 import remarkGfm from "remark-gfm"
 
@@ -14,6 +15,7 @@ export default defineConfig({
   base,
   output: "static",
   trailingSlash: "always",
+  integrations: [sitemap()],
   markdown: {
     processor: unified({
       remarkPlugins: [

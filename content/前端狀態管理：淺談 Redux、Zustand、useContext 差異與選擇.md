@@ -2,7 +2,7 @@
 title: "前端狀態管理: 淺談Redux, Zustand, useContext差異與選擇"
 slug: frontend-state-management-redux-zustand-usecontext
 category: React
-description: 比較 Redux、Zustand 與 React useContext 的設計理念、適用情境與選擇方式
+description: 深入比較 Redux、Zustand 與 React useContext 的設計理念、資料流、效能特性與適用情境，協助開發者選擇合適的前端狀態管理方案
 tags:
   - 前端
   - React

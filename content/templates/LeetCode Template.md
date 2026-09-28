@@ -8,6 +8,11 @@ const difficulty = await tp.system.suggester(
   "選擇題目難度",
 )
 const topicsInput = await tp.system.prompt("標籤，以逗號分隔", "JavaScript")
+const description = await tp.system.prompt(
+  "SEO description",
+  `使用 JavaScript 解 LeetCode ${number.trim()} ${problemTitle.trim()}，整理題目思路、程式實作與時間空間複雜度`,
+  true,
+)
 
 const title = `LeetCode ${number.trim()}. ${problemTitle.trim()}`
 const problemSlug = problemTitle
@@ -27,7 +32,7 @@ await tp.file.rename(title)
 title: <% JSON.stringify(title) %>
 slug: <% slug %>
 category: LeetCode
-description: ""
+description: <% JSON.stringify(description.trim()) %>
 tags:
   - LeetCode
   - <% difficulty %>

@@ -2,7 +2,7 @@
 title: LeetCode 1004. Max Consecutive Ones III
 slug: leetcode-1004-max-consecutive-ones-iii
 category: LeetCode
-description: ""
+description: 使用 JavaScript 滑動視窗解 LeetCode 1004 Max Consecutive Ones III，說明視窗伸縮邏輯，並分析 O(n) 時間與 O(1) 空間複雜度
 tags:
   - LeetCode
   - Medium
