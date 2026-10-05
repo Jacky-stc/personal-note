@@ -20,6 +20,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      sharp:
+        specifier: 0.35.4
+        version: 0.35.4(@types/node@24.19.0)
       unist-util-visit:
         specifier: latest
         version: 5.1.0
@@ -2478,8 +2481,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@img/colour@1.1.0':
-    optional: true
+  '@img/colour@1.1.0': {}
 
   '@img/sharp-darwin-arm64@0.35.4':
     optionalDependencies:
@@ -4212,7 +4214,6 @@ snapshots:
       '@img/sharp-win32-ia32': 0.35.4
       '@img/sharp-win32-x64': 0.35.4
       '@types/node': 24.19.0
-    optional: true
 
   shiki@4.4.3:
     dependencies:
