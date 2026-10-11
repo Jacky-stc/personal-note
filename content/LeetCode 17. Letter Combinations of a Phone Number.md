@@ -10,7 +10,7 @@ tags:
   - Hash Table
   - Backtracking
 date: 2026-10-07
-draft: true
+draft: false
 ---
 
 ## 題目連結
@@ -21,7 +21,7 @@ draft: true
 
 給予一個長度界於 1-4 之間的字串，其中包含數字 `2-9` 的任意排列組合，每一個數字都有相對應的英文字母，試著找出所有可能的字母排列組合
 
-![[Pasted image 20261007202619.png|259]]
+![電話鍵盤數字與字母對照圖](<./Pasted image 20261007202619.png>)
 
 **Example 1:**
 
@@ -41,7 +41,7 @@ a -> j -> w,x,y,z
 ```
 這時我們已經把這條路徑的底部都探索過了，所以我們回歸到 `j` 之後需要把 `j` 砍掉，做新的嘗試：
 ```
-a -> h -> w,x,y,z
+a -> k -> w,x,y,z
 ```
 ## JavaScript 實作
 
@@ -84,5 +84,5 @@ var letterCombinations = function(digits) {
 
 ## 複雜度
 
-- **時間：** `O(n * 4^n)`
-- **空間：** `O(n)`
+- **時間：** `O(n·4^n)`
+- **空間：** `O(n)` （`O(n)` 只計額外空間；若計入輸出則為 `O(n·4^n)`）
