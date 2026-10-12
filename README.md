@@ -9,10 +9,12 @@
 ## 本機開發
 
 ```powershell
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## 發布
 
-將專案推送至 GitHub 的 `main` 分支後，GitHub Actions 會自動建置並部署至 GitHub Pages。第一次發布前，請將 `astro.config.mjs` 中的 `your-github-username` 改成 GitHub 帳號，並在 repository 的 Settings → Pages 將 Source 設為 GitHub Actions。
+將專案推送至 GitHub 的 `main` 分支後，GitHub Actions 會自動建置並部署至 [notes.jackysu.dev](https://notes.jackysu.dev/)。
+
+GitHub Pages 的 Source 設為 GitHub Actions，Custom domain 設為 `notes.jackysu.dev`；DNS 中 `notes` 的 CNAME 記錄指向 `jacky-stc.github.io`，不包含儲存庫名稱。網站地圖位於 [sitemap-index.xml](https://notes.jackysu.dev/sitemap-index.xml)。

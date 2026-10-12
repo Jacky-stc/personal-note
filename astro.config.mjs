@@ -6,13 +6,11 @@ import remarkGfm from "remark-gfm"
 
 import remarkObsidianLinks, { remarkObsidianCallouts } from "./src/lib/remark-obsidian-links.mjs"
 
-const repositoryName = "personal-note"
-const base = `/${repositoryName}`
+const base = "/"
 const contentDirectory = fileURLToPath(new URL("./content", import.meta.url))
 
 export default defineConfig({
-  site: "https://jacky-stc.github.io",
-  base,
+  site: "https://notes.jackysu.dev",
   output: "static",
   trailingSlash: "always",
   integrations: [sitemap()],
