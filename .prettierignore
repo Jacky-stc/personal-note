@@ -2,3 +2,5 @@ dist
 node_modules
 node_modules.quartz-old
 pnpm-lock.yaml
+content/Excalidraw/*.excalidraw.md
+content/templates/LeetCode Template.md
