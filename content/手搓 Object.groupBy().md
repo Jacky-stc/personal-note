@@ -24,8 +24,7 @@ function myGroupBy<T, K extends PropertyKey>(
 
   for (const item of items) {
     const key = cb(item, index)
-    const group = result[key] ?? (result[key] = [])
-    group.push(item)
+    (result[key] ?? []).push(item)
     index++
   }
 
@@ -48,8 +47,7 @@ function myGroupBy<T, K extends PropertyKey>(
 
    for (const item of items) {
      const key = cb(item, index)
-     const group = result[key] ?? (result[key] = [])
-     group.push(item)
+     (result[key] ?? []).push(item)
      index++
    }
    ```
