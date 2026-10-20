@@ -1,9 +1,10 @@
 import type { CollectionEntry } from "astro:content"
 
 const preferredCategoryOrder = new Map([
-  ["React", 0],
-  ["AI", 1],
-  ["LeetCode", 2],
+  ["JavaScript", 0],
+  ["React", 1],
+  ["AI", 2],
+  ["LeetCode", 3],
 ])
 const categoryCollator = new Intl.Collator("en", { numeric: true, sensitivity: "base" })
 const titleCollator = new Intl.Collator("zh-Hant", { numeric: true, sensitivity: "base" })
