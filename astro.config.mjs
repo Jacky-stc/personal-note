@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config"
 import { unified } from "@astrojs/markdown-remark"
 import sitemap from "@astrojs/sitemap"
+import vercel from "@astrojs/vercel"
 import { fileURLToPath } from "node:url"
 import remarkGfm from "remark-gfm"
 
@@ -12,6 +13,9 @@ const contentDirectory = fileURLToPath(new URL("./content", import.meta.url))
 export default defineConfig({
   site: "https://notes.jackysu.dev",
   output: "static",
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
   trailingSlash: "always",
   integrations: [sitemap()],
   markdown: {
