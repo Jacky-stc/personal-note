@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content"
+import Analytics from "@vercel/analytics/astro"
 
 import Sidebar from "../components/Sidebar.astro"
 import { visibleNotes } from "../lib/notes"
@@ -22,6 +23,7 @@ const notes = visibleNotes(await getCollection("notes"))
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <title>{title === "個人學習筆記" ? title : `${title} · 個人學習筆記`}</title>
+    <Analytics />
     <script is:inline>
       (() => {
         const root = document.documentElement
