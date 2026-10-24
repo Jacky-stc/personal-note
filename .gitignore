@@ -6,3 +6,4 @@ dist/
 .obsidian
 private/
 .pnpm-store/
+.vercel/
