@@ -13,6 +13,7 @@
   --brand-bg: #202123;
   --brand-text: #fff;
   --inline-code-bg: #f1f1f3;
+  --inline-code-text: #b42318;
   --quote-border: #d4d4d8;
   --quote-text: #55565b;
   --callout-bg: #f5f7ff;
@@ -47,6 +48,7 @@
   --brand-bg: #f0f0f2;
   --brand-text: #18181a;
   --inline-code-bg: #303034;
+  --inline-code-text: #ff7b72;
   --quote-border: #47474c;
   --quote-text: #b9b9be;
   --callout-bg: #242938;
@@ -393,15 +395,15 @@ body {
 .note-content h1 {
   font-size: clamp(2rem, 5vw, 2.6rem);
   letter-spacing: -0.035em;
-  margin: 0 0 1.75rem;
+  margin: 1.75rem 0;
 }
 .note-content h2 {
   font-size: 1.45rem;
-  margin: 2.3em 0 0.7em;
+  margin: 0.7em 0;
 }
 .note-content h3 {
   font-size: 1.15rem;
-  margin: 2em 0 0.6em;
+  margin: 0.6em 0;
 }
 .note-content p,
 .note-content li {
@@ -418,6 +420,9 @@ body {
   border-radius: 0.3125rem;
   font-size: 0.9em;
   padding: 0.15em 0.35em;
+}
+.note-content :not(pre) > code {
+  color: var(--inline-code-text);
 }
 .note-content pre {
   border-radius: 0.75rem;
