@@ -2,7 +2,7 @@
 title: LeetCode 3882. Minimum XOR Path in a Grid
 slug: leetcode-3882-minimum-xor-path-in-a-grid
 category: LeetCode
-description: 使用 JavaScript 解 LeetCode 3882 Minimum XOR Path in a Grid，整理題目思路、程式實作與時間空間複雜度
+description: LeetCode 3882 Minimum XOR Path in a Grid 解題筆記：使用 JavaScript、Uint8Array 與 Rolling DP 記錄可達的 XOR 狀態，求出最小路徑 XOR 值。
 tags:
   - LeetCode
   - Medium
