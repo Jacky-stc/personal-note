@@ -1,7 +1,7 @@
 ---
-title: "LeetCode 筆記：用 Cycle Decomposition 求 Minimum Swaps"
+title: "演算法筆記：用 Cycle Decomposition 求 Minimum Swaps"
 slug: minimum-swaps-cycle-decomposition
-category: LeetCode
+category: 演算法
 description: "介紹如何用 Cycle Decomposition（循環分解）求排列的最少交換次數，說明每個 cycle 為何需要 k - 1 次交換，並示範 JavaScript 計算方式。"
 tags:
   - LeetCode
