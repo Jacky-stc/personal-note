@@ -316,6 +316,6 @@ O(V + E log(E + 1))
 
 ## References
 
-[Dijkstra's algorithm WikiPedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
-[Dijkstra's algorithm GeeksForGeeks](https://www.geeksforgeeks.org/dsa/dijkstras-shortest-path-algorithm-greedy-algo-7/)
-[[演算法] 學習筆記 — 14. Dijkstra Algorithm 最短路徑演算法](https://medium.com/@amber.fragments/%E6%BC%94%E7%AE%97%E6%B3%95-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-14-dijkstra-algorithm-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%91%E6%BC%94%E7%AE%97%E6%B3%95-745983dd4332)
+- [Dijkstra's algorithm WikiPedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+- [Dijkstra's algorithm GeeksForGeeks](https://www.geeksforgeeks.org/dsa/dijkstras-shortest-path-algorithm-greedy-algo-7/)
+- [[演算法] 學習筆記 — 14. Dijkstra Algorithm 最短路徑演算法](https://medium.com/@amber.fragments/%E6%BC%94%E7%AE%97%E6%B3%95-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-14-dijkstra-algorithm-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%91%E6%BC%94%E7%AE%97%E6%B3%95-745983dd4332)
