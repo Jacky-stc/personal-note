@@ -2,7 +2,7 @@
 title: LeetCode 994. Rotting Oranges
 slug: leetcode-994-rotting-oranges
 category: LeetCode
-description: 使用 JavaScript 解 LeetCode 994 Rotting Oranges，整理題目思路、程式實作與時間空間複雜度
+description: 用 JavaScript 的多起點 BFS 解 LeetCode 994 Rotting Oranges，逐分鐘模擬橘子腐爛，說明如何用索引讀取佇列，並分析時間與空間複雜度。
 tags:
   - LeetCode
   - Medium
@@ -68,13 +68,13 @@ let fresh = 0;
 let minutes = 0;
 
 for(let i = 0; i<grid.length; i++){
-	for(let j = 0; j<grid[0].length; j++){
-		if(grid[i][j] === 2){
-			queue.push([i, j])
-		}else if(grid[i][j] === 1){
-			fresh++
-		}
-	}
+  for(let j = 0; j<grid[0].length; j++){
+    if(grid[i][j] === 2){
+      queue.push([i, j])
+    }else if(grid[i][j] === 1){
+      fresh++
+    }
+  }
 }
 ```
 
@@ -84,42 +84,42 @@ for(let i = 0; i<grid.length; i++){
 
 BFS 有兩個很重要的概念是 `Level` 與 `Distance`，每一次的執行都會把當前的 `Level` 處理完才會進入到下一個 `Level`，並且增加 `Distance`，在這一題可以把 `Level` 想成是「當下所有未處理的腐爛橘子」，而 `Distance` 則是「總共經過的時間」。
 
-如果用 JavaScript 的 `Array.prototype.shift()` 取出隊首，搬移剩餘元素最壞需要 `O(k)` 時間，其中 `k` 是陣列當下的長度。這裡用 `head` 記錄下一筆要處理的位置，每次以 `O(1)` 時間讀取 `queue[head++]`。
+BFS 常見的作法是將處理完的元素從 Queue 中移除，如果用 JavaScript 的 `Array.prototype.shift()` 取出隊首，搬移剩餘元素最壞需要 `O(k)` 時間，其中 `k` 是陣列當下的長度。所以我們這裡用一個指針 `head` 記錄下一筆要處理的位置，每次以 `O(1)` 時間讀取 `queue[head++]`。
 
 ![rotting-oranges](./Excalidraw/rotting-oranges.excalidraw.svg)
 
 ```javascript
-    const directions = [ [-1, 0], [1, 0], [0, -1], [0, 1] ]
-    let head = 0;
+const directions = [ [-1, 0], [1, 0], [0, -1], [0, 1] ]
+let head = 0;
 
-    while(head < queue.length && fresh > 0){
-	    //新的腐爛橘子的數量
-        const size = queue.length - head
+while(head < queue.length && fresh > 0){
+  //新的腐爛橘子的數量
+  const size = queue.length - head
 
-		// 往上下左右擴散
-        for(let i = 0; i<size; i++){
-            const [r, c] = queue[head++]
+  // 往上下左右擴散
+  for(let i = 0; i<size; i++){
+    const [r, c] = queue[head++]
 
-            for(const [dr, dc] of directions){
-                const nr = r + dr
-                const nc = c + dc
+    for(const [dr, dc] of directions){
+      const nr = r + dr
+      const nc = c + dc
 
-                if(
-                    nr < 0 ||
-                    nr >= grid.length ||
-                    nc < 0 ||
-                    nc >= grid[0].length ||
-                    grid[nr][nc] !== 1
-                ) continue
+      if(
+        nr < 0 ||
+        nr >= grid.length ||
+        nc < 0 ||
+        nc >= grid[0].length ||
+        grid[nr][nc] !== 1
+      ) continue
 
-                grid[nr][nc] = 2
-                queue.push([nr, nc])
-                fresh--
-            }
-        }
+      grid[nr][nc] = 2
+      queue.push([nr, nc])
+      fresh--
+    }
+  }
 
-        minutes++
-    }
+  minutes++
+}
 ```
 
 最後我們只要確認新鮮的橘子數量是否為 0，如果是就返回 `minutes`，不是就返回 `-1`。
@@ -128,57 +128,57 @@ BFS 有兩個很重要的概念是 `Level` 與 `Distance`，每一次的執行�
 
 ```javascript
 /**
- * @param {number[][]} grid
- * @return {number}
- */
+ * @param {number[][]} grid
+ * @return {number}
+ */
 var orangesRotting = function (grid) {
-    const queue = []
-    let fresh = 0;
-    let minutes = 0;
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[0].length; j++) {
-            if (grid[i][j] === 1) {
-                fresh++
-            } else if (grid[i][j] === 2) {
-                queue.push([i, j])
-            }
-        }
-    }
+  const queue = []
+  let fresh = 0;
+  let minutes = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] === 1) {
+        fresh++
+      } else if (grid[i][j] === 2) {
+        queue.push([i, j])
+      }
+    }
+  }
 
-    const directions = [
-        [-1, 0],
-        [1, 0],
-        [0, -1],
-        [0, 1]
-    ]
-    let head = 0
-    while (head < queue.length && fresh > 0) {
-        const size = queue.length - head
+  const directions = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  ]
+  let head = 0
+  while (head < queue.length && fresh > 0) {
+    const size = queue.length - head
 
-        for (let i = 0; i < size; i++) {
-            const [r, c] = queue[head++]
+    for (let i = 0; i < size; i++) {
+      const [r, c] = queue[head++]
 
-            for (const [dr, dc] of directions) {
-                const nr = r + dr
-                const nc = c + dc
+      for (const [dr, dc] of directions) {
+        const nr = r + dr
+        const nc = c + dc
 
-                if (
-                    nr < 0 ||
-                    nr >= grid.length ||
-                    nc < 0 ||
-                    nc >= grid[0].length ||
-                    grid[nr][nc] !== 1
-                ) continue
+        if (
+          nr < 0 ||
+          nr >= grid.length ||
+          nc < 0 ||
+          nc >= grid[0].length ||
+          grid[nr][nc] !== 1
+        ) continue
 
-                grid[nr][nc] = 2
-                queue.push([nr, nc])
-                fresh--
-            }
-        }
+        grid[nr][nc] = 2
+        queue.push([nr, nc])
+        fresh--
+      }
+    }
 
-        minutes++
-    }
-    return fresh === 0 ? minutes : -1
+    minutes++
+  }
+  return fresh === 0 ? minutes : -1
 };
 ```
 
